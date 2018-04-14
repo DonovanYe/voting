@@ -46,6 +46,7 @@ import getpass
 import subprocess
 # Allows us to check what OS this script is running on
 import os
+import csv
 
 # Constant used in program.
 LARGE_POSITIVE_INT = 1e15
@@ -464,6 +465,27 @@ def get_all_elgible_email_address():
 			all_full_names.append(full_name)
 			# The 4th column has the email data
 			all_email_addresses.append(all_data[row_index][3])
+
+# Read the file specified by -f to get a list of eligible Avery voter emails
+def get_eligible_email_addresses_from_file(input_filename):
+    global all_email_addresses
+    global all_first_names
+    global all_full_names
+
+    try:
+        with open(input_filename) as tsv:
+            columns = zip(*[line for line in csv.reader(tsv, dialect="excel-tab")])
+            all_first_names = columns[0]
+            all_nicknames = columns[1]
+            all_last_names = columns[2]
+            all_email_addresses = columns[3]
+            all_full_names = [all_first_names[i] + ' ' +
+                (all_nicknames[i] + ' ' if all_nicknames[i] != '' else '') +
+                all_last_names[i] for i in range(0, len(all_first_names))]
+    except Exception as e:
+        print_write('FATAL: ' + str(e))
+        sys.exit(-1)
+    
 
 # delete sent folder to ensure voter anonymity. This prevents association of
 # voter ID with email address and prevents pins from being recovered
