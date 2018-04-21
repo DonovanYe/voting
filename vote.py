@@ -47,6 +47,7 @@ import subprocess
 # Allows us to check what OS this script is running on
 import os
 import csv
+import argparse
 
 # Constant used in program.
 LARGE_POSITIVE_INT = 1e15
@@ -1138,6 +1139,13 @@ def verify_vote_type():
 	
 # Entry point
 if __name__ == "__main__":
+        parser = argparse.ArgumentParser(description='Run an online vote using referendum or instant runoff voting.')
+        parser.add_argument('-f, --file', action='store', type=str, help='provide a tab-separated file containing voter names and emails')
+        args = parser.parse_args()
+        if args.file != '':
+            print 'File provided'
+            get_eligible_email_addresses_from_file(args.file)
+
 	verify_internet_access()
 	# URL retrived from manually-created Google survey 
 	survey_url = raw_input('Enter survey URL:')
@@ -1156,7 +1164,8 @@ if __name__ == "__main__":
 	SUBJECT = raw_input('Enter email subject:') 
 
 	# Load all email addresses to be used in this survey into global variable "all_email_addresses"
-	get_all_elgible_email_address()
+	# get_all_elgible_email_address()
+
 	# Load the number of columns in the spreadsheet into global variable to minimize API calls
 	get_num_columns()
 	# All input params are good. Email links to the survey 
