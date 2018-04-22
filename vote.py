@@ -84,15 +84,15 @@ HOST_GMAIL_ACCOUNT = "averyexcomm@gmail.com"
 SCOPES = [ "https://docs.google.com/feeds/ https://spreadsheets.google.com/feeds/"]
 # Key to Google spreadsheet that hosts the survey results. 
 # Must explicitly link to your local machine.
-LINKED_SPREADSHEET_KEY = "1Pfzdngzcxt94iFSpPxf88TyMehsUcLS-zf5TovR0Ks8"
+LINKED_SPREADSHEET_KEY = "1vWnurAC8HzTIzutuE9wwg-W3ZkdS_oPuLVpUNjE8mjY"
 # Json file in current directory with oauth2 credentials. Downloaded from Google API console
-SECRETS = "OnlineVoting-e363607f6925.json"
+SECRETS = "OnlineVoting-feeaf36c5a59.json"
 # Holds the user-specified subject line for emails
 SUBJECT = ''
 # Holds text describing results of election for use in body of email
 RESULTS_STRING = ''
 # Minimum number of votes reach quorum - 50% of the number of undergrads living in Avery
-QUORUM = 69
+QUORUM = 2
 # Give voters time to reach quorum (seconds). Gets renewed if quorum is not reached.
 # Default 24 hrs
 TIME_LIMIT_QUORUM = 86400
@@ -1116,9 +1116,11 @@ def verify_gmail_pass(gmail_password):
 		server.starttls()
 		server.login(sender, gmail_password)
 		server.quit()
-	except:
+                return True
+	except Exception as e:
+                print(e)
 		print_write("Wrong gmail password name. Exiting")
-		sys.exit(-1)
+                return False
 		
 # Check if this is an IRV vote or referendum so rules can be modified
 def verify_vote_type():
@@ -1142,9 +1144,10 @@ if __name__ == "__main__":
         parser = argparse.ArgumentParser(description='Run an online vote using referendum or instant runoff voting.')
         parser.add_argument('-f, --file', action='store', type=str, help='provide a tab-separated file containing voter names and emails')
         args = parser.parse_args()
-        if args.file != '':
-            print 'File provided'
-            get_eligible_email_addresses_from_file(args.file)
+        get_eligible_email_addresses_from_file('voters.txt')
+        print(all_first_names)
+        print(all_full_names)
+        print(all_email_addresses)
 
 	verify_internet_access()
 	# URL retrived from manually-created Google survey 
@@ -1158,8 +1161,10 @@ if __name__ == "__main__":
 	WORKSHEET_TITLE = raw_input('Enter worksheet title:') 
 	verify_voter_data_worksheet() 
 	# Password known by all members of the ExComm
-	gmail_password = getpass.getpass('[ECHO DISABLED] Enter averyexcomm password:') 
-	verify_gmail_pass(gmail_password)
+        while(True):
+	    gmail_password = getpass.getpass('[ECHO DISABLED] Enter averyexcomm password:') 
+            if verify_gmail_pass(gmail_password):
+                break
 	# Subject as it will appear in emails
 	SUBJECT = raw_input('Enter email subject:') 
 

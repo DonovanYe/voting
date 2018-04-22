@@ -1,5 +1,5 @@
-Catherine 	Day	cday@caltech.edu
-David	Elliott	delliott@caltech.edu
-Thomas	Gallup	tgallup@caltech.edu
-Adrian	Huang	ajhuang@caltech.edu
-Tiger	Lu	tclu@caltech.edu
+Catherine		Day	cday@caltech.edu
+David		Elliott	delliott@caltech.edu
+Thomas		Gallup	tgallup@caltech.edu
+Adrian		Huang	ajhuang@caltech.edu
+Tiger		Lu	tclu@caltech.edu
