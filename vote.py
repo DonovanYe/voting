@@ -84,7 +84,7 @@ HOST_GMAIL_ACCOUNT = "averyexcomm@gmail.com"
 SCOPES = [ "https://docs.google.com/feeds/ https://spreadsheets.google.com/feeds/"]
 # Key to Google spreadsheet that hosts the survey results. 
 # Must explicitly link to your local machine.
-LINKED_SPREADSHEET_KEY = "1vWnurAC8HzTIzutuE9wwg-W3ZkdS_oPuLVpUNjE8mjY"
+LINKED_SPREADSHEET_KEY = "1TxbBbl6rSYLHY6_IZj1b76QlsHf8HVhg2CozviuA5_M"
 # Json file in current directory with oauth2 credentials. Downloaded from Google API console
 SECRETS = "OnlineVoting-feeaf36c5a59.json"
 # Holds the user-specified subject line for emails
@@ -92,7 +92,7 @@ SUBJECT = ''
 # Holds text describing results of election for use in body of email
 RESULTS_STRING = ''
 # Minimum number of votes reach quorum - 50% of the number of undergrads living in Avery
-QUORUM = 2
+QUORUM = 69
 # Give voters time to reach quorum (seconds). Gets renewed if quorum is not reached.
 # Default 24 hrs
 TIME_LIMIT_QUORUM = 86400
@@ -609,7 +609,7 @@ def email_results(gmail_password):
 			+ "\n\nThank you for keeping Avery great," \
 			+ "\n\n<3 your ExComm" \
 			+ "\nSurvey ID (should match the first email): " + str(all_survey_ids[i]) \
-			+ "\nGithub repo: https://github.com/jordanbonilla/OnlineVoting"
+			+ "\nGithub repo: https://github.com/averyhouse/voting"
 
 			# Prepare actual message
 			message = MIMEMultipart()
@@ -700,7 +700,7 @@ def email_the_links(gmail_password):
 			+ "\n\nThank you for keeping Avery great," \
 			+ "\n\n<3 your ExComm" \
 			+ "\nSurvey ID: " + str(all_survey_ids[i]) \
-			+ "\nGithub repo: https://github.com/jordanbonilla/OnlineVoting"
+			+ "\nGithub repo: https://github.com/averyhouse/voting"
 			# Prepare actual message
 			message = """\From: %s\nTo: %s\nSubject: %s\n\n%s
 			""" % (FROM, TO, SUBJECT, TEXT)
@@ -1018,7 +1018,7 @@ def email_tamper_notification():
 			TEXT = "Hi " + all_first_names[i] + ', ' \
 			+ "\n\nThe vote has been terminated due to detection of vote manipulation\n" \
 			+ "\n\nSurvey ID (should match the first email): " + str(all_survey_ids[i]) \
-			+ "\nGithub repo: https://github.com/jordanbonilla/OnlineVoting"
+			+ "\nGithub repo: https://github.com/averyhouse/voting"
 			# Prepare actual message
 			message = """\From: %s\nTo: %s\nSubject: %s\n\n%s
 			""" % (FROM, TO, "*CANCELED* " + SUBJECT, TEXT)
